@@ -6,8 +6,8 @@ import subprocess
 import sys
 import textwrap
 
-import yaml
 import defusedxml.ElementTree
+import yaml
 
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 CONFIG_FILE = os.path.join(SCRIPT_DIR, "flags.yaml")

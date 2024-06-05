@@ -42,7 +42,6 @@ from inspect import signature
 from typing import Optional
 
 import yaml
-
 from memgraph import MemgraphInstanceRunner, extract_bolt_port
 
 log = logging.getLogger("memgraph.tests.e2e")
