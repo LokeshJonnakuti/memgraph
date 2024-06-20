@@ -15,6 +15,7 @@ include = ["mgp.py", "_mgp.py"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
+security = "==1.2.1"
 
 [tool.poetry.dev-dependencies]
 

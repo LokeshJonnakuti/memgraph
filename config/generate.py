@@ -8,6 +8,7 @@ import textwrap
 import xml.etree.ElementTree as ET
 
 import yaml
+from security import safe_command
 
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 CONFIG_FILE = os.path.join(SCRIPT_DIR, "flags.yaml")
@@ -22,7 +23,7 @@ def wrap_text(s, initial_indent="# "):
 
 def extract_flags(binary_path):
     ret = {}
-    data = subprocess.run([binary_path, "--help-xml"], stdout=subprocess.PIPE).stdout.decode("utf-8")
+    data = safe_command.run(subprocess.run, [binary_path, "--help-xml"], stdout=subprocess.PIPE).stdout.decode("utf-8")
     # If something is printed out before the help output, it will break the the
     # XML parsing -> filter out if something is not XML line because something
     # can be logged before gflags output (e.g. during the global objects init).
