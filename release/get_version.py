@@ -6,6 +6,7 @@ import subprocess
 import sys
 import time
 from functools import wraps
+
 from security import safe_command
 
 # This script is used to determine the current version of Memgraph. The script
