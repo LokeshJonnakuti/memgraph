@@ -5,9 +5,9 @@ import os
 import subprocess
 import sys
 import textwrap
-import xml.etree.ElementTree as ET
 
 import yaml
+import defusedxml.ElementTree
 
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 CONFIG_FILE = os.path.join(SCRIPT_DIR, "flags.yaml")
@@ -31,7 +31,7 @@ def extract_flags(binary_path):
     # NOTE: Don't use \n in the gflags description strings.
     # NOTE: Check here if gflags version changes because of the XML format.
     data = "\n".join([line for line in data.split("\n") if line.startswith("<")])
-    root = ET.fromstring(data)
+    root = defusedxml.ElementTree.fromstring(data)
     for child in root:
         if child.tag == "usage" and child.text.lower().count("warning"):
             raise Exception("You should set the usage message!")

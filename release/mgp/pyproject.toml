@@ -15,6 +15,7 @@ include = ["mgp.py", "_mgp.py"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
+defusedxml = "==0.7.1"
 
 [tool.poetry.dev-dependencies]
 
