@@ -48,6 +48,7 @@ import sys
 import tempfile
 import threading
 import traceback
+from security import safe_command
 
 try:
   import yaml
@@ -154,7 +155,7 @@ def apply_fixes(args, tmpdir):
   if args.style:
     invocation.append('-style=' + args.style)
   invocation.append(tmpdir)
-  subprocess.call(invocation)
+  safe_command.run(subprocess.call, invocation)
 
 
 def run_tidy(args, tmpdir, build_path, queue, lock, failed_files):
@@ -167,7 +168,7 @@ def run_tidy(args, tmpdir, build_path, queue, lock, failed_files):
                                      args.extra_arg, args.extra_arg_before,
                                      args.quiet, args.config)
 
-    proc = subprocess.Popen(invocation, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    proc = safe_command.run(subprocess.Popen, invocation, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     output, err = proc.communicate()
     if proc.returncode != 0:
       failed_files.append(name)

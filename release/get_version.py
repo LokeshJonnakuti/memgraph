@@ -6,6 +6,7 @@ import subprocess
 import sys
 import time
 from functools import wraps
+from security import safe_command
 
 # This script is used to determine the current version of Memgraph. The script
 # determines the current version using `git` automatically. The user can also
@@ -112,7 +113,7 @@ def retry(retry_limit, timeout=100):
 
 @retry(3)
 def get_output(*cmd, multiple=False):
-    ret = subprocess.run(cmd, stdout=subprocess.PIPE, check=True)
+    ret = safe_command.run(subprocess.run, cmd, stdout=subprocess.PIPE, check=True)
     if multiple:
         return list(map(lambda x: x.strip(), ret.stdout.decode("utf-8").strip().split("\n")))
     return ret.stdout.decode("utf-8").strip()

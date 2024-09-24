@@ -35,6 +35,7 @@ import sys
 import tempfile
 import threading
 import traceback
+from security import safe_command
 
 try:
     import yaml
@@ -61,7 +62,7 @@ def run_tidy(task_queue, lock, timeout, exit_status, running_processes):
 
         proc = None
         try:
-            proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            proc = safe_command.run(subprocess.Popen, command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             with lock:
                 running_processes.add(proc)
 
