@@ -12,8 +12,7 @@ const char *kUsage =
     "A simple tool for dumping Memgraph database's data as list of openCypher "
     "queries.\n";
 
-DEFINE_string(host, "127.0.0.1",
-              "Server address. It can be a DNS resolvable hostname.");
+DEFINE_string(host, "127.0.0.1", "Server address. It can be a DNS resolvable hostname.");
 DEFINE_int32(port, 7687, "Server port");
 DEFINE_string(username, "", "Username for the database");
 DEFINE_string(password, "", "Password for the database");
@@ -26,8 +25,7 @@ int main(int argc, char **argv) {
   gflags::SetUsageMessage(kUsage);
   gflags::ParseCommandLineFlags(&argc, &argv, true);
 
-  const std::string bolt_client_version =
-      fmt::format("mg_dump/{}", gflags::VersionString());
+  const std::string bolt_client_version = fmt::format("mg_dump/{}", gflags::VersionString());
 
   // Setup session params
   mg_session_params *params = mg_session_params_make();
@@ -42,22 +40,19 @@ int main(int argc, char **argv) {
     mg_session_params_set_password(params, FLAGS_password.c_str());
   }
   mg_session_params_set_user_agent(params, bolt_client_version.c_str());
-  mg_session_params_set_sslmode(
-      params, FLAGS_use_ssl ? MG_SSLMODE_REQUIRE : MG_SSLMODE_DISABLE);
+  mg_session_params_set_sslmode(params, FLAGS_use_ssl ? MG_SSLMODE_REQUIRE : MG_SSLMODE_DISABLE);
 
   // Establish connection
   mg_session *session = nullptr;
   int status = mg_connect(params, &session);
   mg_session_params_destroy(params);
   if (status < 0) {
-    std::cerr << "Connection failed: " << mg_session_error(session)
-              << std::endl;
+    std::cerr << "Connection failed: " << mg_session_error(session) << std::endl;
     mg_session_destroy(session);
     return 1;
   }
 
-  if (mg_session_run(session, "DUMP DATABASE", nullptr, nullptr, nullptr,
-                     nullptr) < 0) {
+  if (mg_session_run(session, "DUMP DATABASE", nullptr, nullptr, nullptr, nullptr) < 0) {
     std::cerr << "Execution failed: " << mg_session_error(session) << std::endl;
     mg_session_destroy(session);
     return 1;

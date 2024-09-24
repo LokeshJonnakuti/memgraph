@@ -27,4 +27,3 @@ Feature: Queries related to all Stackoverflow questions related to WSP
     Then the result should be:
       | hops        | total_weight |
       |'1 -> 3 -> 4'| 17           |
-

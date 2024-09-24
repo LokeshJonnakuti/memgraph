@@ -4,6 +4,7 @@ import argparse
 import os
 import subprocess
 import sys
+
 from security import safe_command
 
 CLANG_TIDY_DIFF = "./tools/github/clang-tidy/clang-tidy-diff.py"
@@ -26,7 +27,9 @@ def check_clang_tidy():
 
 def run_clang_tidy_on_files(compile_commands_path):
     process1 = safe_command.run(subprocess.Popen, "git diff -U0 HEAD".split(), stdout=subprocess.PIPE)
-    process2 = safe_command.run(subprocess.Popen, f"{CLANG_TIDY_DIFF} -p1 -j 8 -path {compile_commands_path}".split(),
+    process2 = safe_command.run(
+        subprocess.Popen,
+        f"{CLANG_TIDY_DIFF} -p1 -j 8 -path {compile_commands_path}".split(),
         stdin=process1.stdout,
         stdout=subprocess.PIPE,
     )

@@ -22,7 +22,7 @@ on:
 
 env:
   ARCH: ${{ inputs.arch }}
-  BUILD_TYPE: 'Debug' 
+  BUILD_TYPE: 'Debug'
   MEMGRAPH_ENTERPRISE_LICENSE: ${{ secrets.MEMGRAPH_ENTERPRISE_LICENSE }}
   MEMGRAPH_ORGANIZATION_NAME: ${{ secrets.MEMGRAPH_ORGANIZATION_NAME }}
   OS: ${{ inputs.os }}
